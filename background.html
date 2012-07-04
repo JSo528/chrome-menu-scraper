@@ -1,0 +1,36 @@
+<html>
+<head>
+	<script src='jquery.min.js'></script>
+	<script>
+		
+		function open_admins() {
+		  chrome.tabs.create({
+		    'url':'orderahead.dev:3000/admins/json_to_menu',
+		    'selected':true
+		  })
+		}
+
+		function send_data() {
+			alert(menu_hash)
+		}
+
+		chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+	    console.log(sender.tab ?
+	                "from a content script:" + sender.tab.url :
+	                "from the extension");
+
+	    if (request.greeting == "hello")
+	      sendResponse({farewell: "goodbye"});
+	  });
+
+		// chrome.browserAction.onClicked.addListener(open_admins);
+		chrome.browserAction.onClicked.addListener(send_data);
+
+
+
+
+	</script>
+</head>
+<body>
+</body>
+</html>
