@@ -2,6 +2,7 @@
   "name": "jQuery DOM",
   "version": "1",
   "description": "Manipulate the DOM when the page is done loading",
+  "permissions": ["tabs", "http://*/", "https://*/"],
   "background": {
     // "scripts": ["background.js"]
     "page": "background.html"
@@ -14,8 +15,5 @@
   "content_scripts": [ {
     "js": [ "jquery.min.js", "content.js" ],
     "matches": [ "http://*/*", "https://*/*"]
-  }],
-  "permissions": [
-    "tabs"
-  ] 
+  }]
 }

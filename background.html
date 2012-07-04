@@ -5,26 +5,26 @@
 		
 		function open_admins() {
 		  chrome.tabs.create({
-		    'url':'orderahead.dev:3000/admins/json_to_menu',
+		    'url':'http://orderahead.dev:3000/admins/json_to_menu',
 		    'selected':true
 		  })
 		}
 
-		function send_data() {
-			alert(menu_hash)
-		}
-
 		chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-	    console.log(sender.tab ?
-	                "from a content script:" + sender.tab.url :
-	                "from the extension");
+	    chrome.tabs.create({
+		    'url':'http://hipchemistlabs.com/admins/json_to_menu',
+		    'selected':true
+		  }, function(tab) {
+	      tabId = tab.id
+	      text = JSON.stringify(request.hash)
+  			chrome.tabs.executeScript(tabId, {code:"$('#json').val(" + JSON.stringify(text) + ")"});
+		  })
 
 	    if (request.greeting == "hello")
 	      sendResponse({farewell: "goodbye"});
 	  });
 
 		// chrome.browserAction.onClicked.addListener(open_admins);
-		chrome.browserAction.onClicked.addListener(send_data);
 
 
 

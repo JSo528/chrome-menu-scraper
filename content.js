@@ -17,8 +17,8 @@ $('.category').each( function() {
 
 json_string = JSON.stringify(menu_hash);
 console.log(json_string)
-
-chrome.extension.sendMessage({greeting: "hello"}, function(response) {
-  console.log(response.farewell);
-});
-
+if (menu_hash["menu_categories"].length > 0) {
+	chrome.extension.sendMessage({hash:menu_hash}, function(response) {
+	  console.log(response.farewell);
+	});
+}
