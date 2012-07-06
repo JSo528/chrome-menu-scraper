@@ -25,7 +25,7 @@ if (window.location.host.match("allmenus") != null) {
 		$(this).next().find('.item').each(function() {
 			mi_name = $(this).find('.item_name a').text();
 			mi_price = $(this).find('.item_price span').text().replace(/[$.+]/g, "").trim();
-			mi_description = $(this).find('.item description').text();		
+			mi_description = $(this).find('.item_description').text();		
 			last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
 			menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
 		})

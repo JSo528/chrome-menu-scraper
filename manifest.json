@@ -1,6 +1,6 @@
 {
   "name": "OA Menu Scraper",
-  "version": "2",
+  "version": "2.1",
   "description": "Scrapes menus online using jQuery",
   "update_url": "https://s3.amazonaws.com/orderahead-production/chrome_extensions/chrome-menu-crawler-updates.xml",
   "permissions": ["tabs", "http://*/", "https://*/"],
