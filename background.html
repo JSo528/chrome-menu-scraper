@@ -2,32 +2,17 @@
 <head>
 	<script src='jquery.min.js'></script>
 	<script>
-		
-		function open_admins() {
-		  chrome.tabs.create({
-		    'url':'http://orderahead.dev:3000/admins/json_to_menu',
-		    'selected':true
-		  })
-		}
 
 		chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	    chrome.tabs.create({
-		    'url':'http://hipchemistlabs.com/admins/json_to_menu',
+		    'url':'http://orderaheadapp.com/admins/json_to_menu',
 		    'selected':true
 		  }, function(tab) {
 	      tabId = tab.id
 	      text = JSON.stringify(request.hash)
   			chrome.tabs.executeScript(tabId, {code:"$('#json').val(" + JSON.stringify(text) + ")"});
 		  })
-
-	    if (request.greeting == "hello")
-	      sendResponse({farewell: "goodbye"});
 	  });
-
-		// chrome.browserAction.onClicked.addListener(open_admins);
-
-
-
 
 	</script>
 </head>

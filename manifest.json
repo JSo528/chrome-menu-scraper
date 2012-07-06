@@ -1,16 +1,16 @@
 {
-  "name": "jQuery DOM",
-  "version": "1",
-  "description": "Manipulate the DOM when the page is done loading",
+  "name": "OA Menu Scraper",
+  "version": "2",
+  "description": "Scrapes menus online using jQuery",
+  "update_url": "https://s3.amazonaws.com/orderahead-production/chrome_extensions/chrome-menu-crawler-updates.xml",
   "permissions": ["tabs", "http://*/", "https://*/"],
   "background": {
-    // "scripts": ["background.js"]
     "page": "background.html"
   },
   "browser_action": {
-    "name": "Manipulate DOM",
-    "icons": ["icon.png"],
-    "default_icon": "icon.png"
+    "name": "OA Menu Scrapper",
+    "icons": ["logo.png"],
+    "default_icon": "logo.png"
   },
   "content_scripts": [ {
     "js": [ "jquery.min.js", "content.js" ],
