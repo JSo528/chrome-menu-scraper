@@ -50,6 +50,45 @@ if (window.location.host.match("allmenus") != null) {
 		})
 	})
 
+} else if (window.location.host.match("menupages") != null){
+
+	$('#restaurant-menu h3').each( function() {
+		mc_name =	$(this).text();
+		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]})
+
+		domEl = $(this).next();
+		if (domEl.hasClass('prices-three') == false) {
+			domEl = $(this).next().next();
+		}
+
+		domEl.find('tr').each(function() {
+			string = $(this).find('cite').text().replace('*', '');
+			first_letter = string.match(/[a-zA-Z]/);
+    	index = string.indexOf(first_letter);
+    	mi_name = string.slice(index);
+
+			string = $($(this).children()[3]).text().replace(/[$.+-]/g, "");
+			index = string.indexOf(')') + 1;
+			if (index > 0 ) {
+				mi_price = string.slice(index);
+			} else {
+				mi_price = string;
+			}
+
+			if (mi_price == "") {
+				mi_price = 0;
+			}
+
+			string = $(this).find('th').text().replace('*', '');
+			first_letter = string.match(/[a-zA-Z]/);
+    	index = string.indexOf(first_letter);
+    	mi_description = string.slice(index);
+
+			last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
+			menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
+		})
+	})
+
 }
 
 if (menu_hash["menu_categories_attributes"].length > 0) {
