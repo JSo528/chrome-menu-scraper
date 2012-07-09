@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
+  <app appid='ifencifeieeebpahejlmbommagjjmbfi'>
+    <updatecheck codebase='https://s3.amazonaws.com/orderahead-production/chrome_extensions/chrome-menu-crawler.crx' version='1' />
+  </app>
+</gupdate>
