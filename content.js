@@ -68,25 +68,40 @@ if (window.location.host.match("allmenus") != null) {
     	index = string.indexOf(first_letter);
     	mi_name = string.slice(index);
 
-			string = $($(this).children()[3]).text().replace(/[$.+-]/g, "");
-			index = string.indexOf(')') + 1;
+    	// if there is a price in the 3rd column then there are two sizes for this menu item
+  		string1 = $($(this).children()[2]).text().replace(/[$.+-]/g, "");
+  		index = string1.indexOf(')') + 1;
 			if (index > 0 ) {
-				mi_price = string.slice(index);
+				mi_price1 = string1.slice(index);
 			} else {
-				mi_price = string;
+				mi_price1 = string1.trim();
+			}
+    	
+			string2 = $($(this).children()[3]).text().replace(/[$.+-]/g, "");
+			index = string2.indexOf(')') + 1;
+			if (index > 0 ) {
+				mi_price2 = string2.slice(index);
+			} else {
+				mi_price2 = string2.trim();
 			}
 
-			if (mi_price == "") {
-				mi_price = 0;
+			if (mi_price2 == "") {
+				mi_price2 = 0;
 			}
 
-			string = $(this).find('th').text().replace('*', '');
-			first_letter = string.match(/[a-zA-Z]/);
-    	index = string.indexOf(first_letter);
-    	mi_description = string.slice(index);
+	    // filter away option sets
+	    if ($(this).find('th')[0].childNodes[1] != undefined) {
+	    	mi_name2 = mi_name
+   			mi_description = $(this).find('th')[0].childNodes[1].wholeText;
+   			last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
+   			if (mi_price1.trim().length > 0) {
+   				mi_name2 = mi_name + " (((copy)))";
+   				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price1, "description":mi_description});
+   			}
+				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name2, "price":mi_price2, "description":mi_description});
 
-			last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
-			menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
+   		}
+			
 		})
 	})
 
