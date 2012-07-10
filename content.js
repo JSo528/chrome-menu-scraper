@@ -1,11 +1,11 @@
-menu_hash = {}
-menu_hash["menu_categories_attributes"] = []
+menu_hash = {};
+menu_hash["menu_categories_attributes"] = [];
 
 if (window.location.host.match("allmenus") != null) {
 
 	$('.category').each( function() {
 		mc_name =	$(this).find('.category_head h3').text();
-		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]})
+		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
 
 		$(this).find('.menu_item').each(function() {
 			mi_name = $(this).find('.name').text();
@@ -16,11 +16,12 @@ if (window.location.host.match("allmenus") != null) {
 		})
 
 	})
+
 } else if (window.location.host.match("eat24hours") != null) {
 
 	$('.section2').each( function() {
 		mc_name =	$($(this).find('div')[0]).text();
-		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]})
+		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
 
 		$(this).next().find('.item').each(function() {
 			mi_name = $(this).find('.item_name a').text();
@@ -36,7 +37,7 @@ if (window.location.host.match("allmenus") != null) {
 
 	$('.menuItems').each( function() {
 		mc_name =	$(this).find('h5 a').text();
-		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]})
+		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
 
 		$(this).find('.menuItem').each(function() {
 			mi_name = $(this).find('a.productFancyBox').text().trim();
@@ -54,7 +55,7 @@ if (window.location.host.match("allmenus") != null) {
 
 	$('#restaurant-menu h3').each( function() {
 		mc_name =	$(this).text();
-		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]})
+		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
 
 		domEl = $(this).next();
 		if (domEl.hasClass('prices-three') == false) {
@@ -87,6 +88,27 @@ if (window.location.host.match("allmenus") != null) {
 			last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
 			menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
 		})
+	})
+
+} else if (window.location.host.match("grubhub") != null){
+
+	$('h5.site_h2').each( function() {
+		if (!$(this).hasClass('popularItems')) {
+
+			mc_name =	$(this).text();
+			menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
+
+			$(this).next().next().find('li').each(function() {
+
+				mi_name = $(this).attr('order-item-title');
+				mi_price = $(this).attr('order-item-price').replace(/[$.]/g, "");
+				mi_description = $(this).attr('order-item-details');	
+				last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
+				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
+				
+			})
+		}
+
 	})
 
 }
