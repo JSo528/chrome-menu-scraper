@@ -55,6 +55,9 @@ if (window.location.host.match("allmenus") != null) {
 
 	$('#restaurant-menu h3').each( function() {
 		mc_name =	$(this).text();
+
+		category_price = $(this).text().match(/\$\d\.\d{2}/) != null ? $(this).text().match(/\$\d\.\d{2}/).toString().replace(/[$.+-]/g, "") : 0;
+		console.log(category_price)
 		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
 
 		domEl = $(this).next();
@@ -66,7 +69,8 @@ if (window.location.host.match("allmenus") != null) {
 			string = $(this).find('cite').text().replace('*', '');
 			first_letter = string.match(/[a-zA-Z]/);
     	index = string.indexOf(first_letter);
-    	mi_name = string.slice(index);
+    	mi_name1 = string.slice(index);
+    	mi_name2 = mi_name1
 
     	// if there is a price in the 3rd column then there are two sizes for this menu item
   		string1 = $($(this).children()[2]).text().replace(/[$.+-]/g, "");
@@ -86,17 +90,17 @@ if (window.location.host.match("allmenus") != null) {
 			}
 
 			if (mi_price2 == "") {
-				mi_price2 = 0;
+				mi_price2 = category_price;
 			}
 
 	    // filter away option sets
 	    if ($(this).find('th')[0].childNodes[1] != undefined) {
-	    	mi_name2 = mi_name
+	    	
    			mi_description = $(this).find('th')[0].childNodes[1].wholeText;
    			last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
    			if (mi_price1.trim().length > 0) {
-   				mi_name2 = mi_name + " (((copy)))";
-   				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price1, "description":mi_description});
+   				mi_name2 = mi_name2 + " (((copy)))";
+   				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name1, "price":mi_price1, "description":mi_description});
    			}
 				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name2, "price":mi_price2, "description":mi_description});
 
