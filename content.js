@@ -92,6 +92,10 @@ if (window.location.host.match("allmenus") != null) {
 
 } else if (window.location.host.match("grubhub") != null){
 
+	ii = 0;
+
+	$('body').append('<div class="temp"></div>');
+
 	$('h5.site_h2').each( function() {
 		if (!$(this).hasClass('popularItems')) {
 
@@ -100,19 +104,62 @@ if (window.location.host.match("allmenus") != null) {
 
 			$(this).next().next().find('li').each(function() {
 
+				ii++;
+
 				mi_name = $(this).attr('order-item-title');
-				mi_price = $(this).attr('order-item-price').replace(/[$.]/g, "");
+				mi_price = $(this).attr('order-item-price').split(' ')[0].replace(/[$.+]/g, "");
 				mi_description = $(this).attr('order-item-details');	
 				last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
-				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
-				
-			})
-		}
 
+				menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
+
+			});
+
+		}
 	})
 
+	jj = 0;
+
+	$('h5.site_h2').each(function() {
+		if (!$(this).hasClass('popularItems')) {
+			$(this).next().next().find('li').each(function() {
+				link = $(this).find('a').attr('href');
+				$.get(link,function(response) { 
+
+					jj++;
+
+					$('.temp').html($(response).find('#standalone-item'));
+
+					mi_name = $('.temp #item').text().trim();
+					mi_price = $('.temp #itemPrice .rest_type').text().split(' ')[0].replace(/[$.+]/g, "");
+					mi_description = $('.temp p.rest_type').text().trim();	
+
+			    if (response.match('class="itemOptionGroup"')) {
+			    	for (i=0;i<menu_hash["menu_categories_attributes"].length;i++) {
+			    		for (j=0;j<menu_hash["menu_categories_attributes"][i]["menu_items_attributes"].length;j++) {
+
+			    			if (menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["name"] == mi_name &&
+			    				menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["description"] == mi_description) {
+			    				menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["description"] = mi_description + " OPTION SETS!!!.";
+			    			}
+
+			    		}
+			    	}
+			    }
+
+    		  if (ii == jj) {
+    				chrome.extension.sendMessage({hash:menu_hash});
+    			}
+
+			  })
+			})
+		}
+	})
 }
 
-if (menu_hash["menu_categories_attributes"].length > 0) {
+
+
+
+if (menu_hash["menu_categories_attributes"].length > 0 && window.location.host.match("grubhub") == null) {
 	chrome.extension.sendMessage({hash:menu_hash});
 }
