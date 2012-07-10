@@ -3,19 +3,34 @@ menu_hash["menu_categories_attributes"] = [];
 
 if (window.location.host.match("allmenus") != null) {
 
-	$('.category').each( function() {
-		mc_name =	$(this).find('.category_head h3').text();
-		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
-
-		$(this).find('.menu_item').each(function() {
-			mi_name = $(this).find('.name').text();
-			mi_price = $(this).find('.price').text().replace(/[$.]/g, "");
-			mi_description = $(this).find('.description').text();		
-			last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
-			menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
+		// checks to see if there are multile menus
+		// if there is it appends the extra menu categories to the current menu
+		$($('#alternative_menus')[0]).find('li a').each(function() {
+			if (!$(this).parent().hasClass('current_group')) {
+				link = $(this).attr('href')
+				$.get(link,function(response) { $('#menu').append($(response).find('#menu').children()) })
+			}
 		})
 
-	})
+		// delay of 3 seconds is used to fetch the other webpages
+		setTimeout(function() {
+			$('.category').each( function() {
+
+				mc_name =	$(this).find('.category_head h3').text();
+				menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
+
+				$(this).find('.menu_item').each(function() {
+					mi_name = $(this).find('.name').text();
+					mi_price = $(this).find('.price').text().replace(/[$.]/g, "");
+					mi_description = $(this).find('.description').text();		
+					last_mc_index =	menu_hash["menu_categories_attributes"].length - 1;
+					menu_hash["menu_categories_attributes"][last_mc_index]["menu_items_attributes"].push({"name":mi_name, "price":mi_price, "description":mi_description});
+				})
+
+			})
+			chrome.extension.sendMessage({hash:menu_hash});
+
+		}, 3000);
 
 } else if (window.location.host.match("eat24hours") != null) {
 
@@ -57,7 +72,7 @@ if (window.location.host.match("allmenus") != null) {
 		mc_name =	$(this).text();
 
 		category_price = $(this).text().match(/\$\d\.\d{2}/) != null ? $(this).text().match(/\$\d\.\d{2}/).toString().replace(/[$.+-]/g, "") : 0;
-		console.log(category_price)
+
 		menu_hash["menu_categories_attributes"].push({"name":mc_name, "menu_items_attributes":[]});
 
 		domEl = $(this).next();
