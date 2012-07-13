@@ -126,7 +126,7 @@ if (window.location.host.match("allmenus") != null) {
 
 } else if (window.location.host.match("grubhub") != null){
 
-	ii = 0;
+	// ii = 0;
 
 	$('body').append('<div class="temp"></div>');
 
@@ -138,7 +138,7 @@ if (window.location.host.match("allmenus") != null) {
 
 			$(this).next().next().find('li').each(function() {
 
-				ii++;
+				// ii++;
 
 				mi_name = $(this).attr('order-item-title');
 				mi_price = $(this).attr('order-item-price').split(' ')[0].replace(/[$.+]/g, "");
@@ -152,48 +152,52 @@ if (window.location.host.match("allmenus") != null) {
 		}
 	})
 
-	jj = 0;
+	// jj = 0;
 
-	$('h5.site_h2').each(function() {
-		if (!$(this).hasClass('popularItems')) {
-			$(this).next().next().find('li').each(function() {
-				link = $(this).find('a').attr('href');
-				$.get(link,function(response) { 
+	// $('h5.site_h2').each(function() {
+	// 	if (!$(this).hasClass('popularItems')) {
+	// 		$(this).next().next().find('li').each(function() {
+	// 			link = $(this).find('a').attr('href');
+	// 			$.get(link,function(response) { 
 
-					jj++;
+	// 				jj++;
 
-					$('.temp').html($(response).find('#standalone-item'));
+	// 				$('.temp').html($(response).find('#standalone-item'));
 
-					mi_name = $('.temp #item').text().trim();
-					mi_price = $('.temp #itemPrice .rest_type').text().split(' ')[0].replace(/[$.+]/g, "");
-					mi_description = $('.temp p.rest_type').text().trim();	
+	// 				mi_name = $('.temp #item').text().trim();
+	// 				mi_price = $('.temp #itemPrice .rest_type').text().split(' ')[0].replace(/[$.+]/g, "");
+	// 				mi_description = $('.temp p.rest_type').text().trim();	
 
-			    if (response.match('class="itemOptionGroup"')) {
-			    	for (i=0;i<menu_hash["menu_categories_attributes"].length;i++) {
-			    		for (j=0;j<menu_hash["menu_categories_attributes"][i]["menu_items_attributes"].length;j++) {
+	// 		    if (response.match('class="itemOptionGroup"')) {
+	// 		    	for (i=0;i<menu_hash["menu_categories_attributes"].length;i++) {
+	// 		    		for (j=0;j<menu_hash["menu_categories_attributes"][i]["menu_items_attributes"].length;j++) {
 
-			    			if (menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["name"] == mi_name &&
-			    				menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["description"] == mi_description) {
-			    				menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["description"] = mi_description + " OPTION SETS!!!.";
-			    			}
+	// 		    			if (menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["name"] == mi_name &&
+	// 		    				menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["description"] == mi_description) {
+	// 		    				menu_hash["menu_categories_attributes"][i]["menu_items_attributes"][j]["description"] = mi_description + " OPTION SETS!!!.";
+	// 		    			}
 
-			    		}
-			    	}
-			    }
+	// 		    		}
+	// 		    	}
+	// 		    }
 
-    		  if (ii == jj) {
-    				chrome.extension.sendMessage({hash:menu_hash});
-    			}
+ //    		  if (ii == jj) {
+ //    				chrome.extension.sendMessage({hash:menu_hash});
+ //    			}
 
-			  })
-			})
-		}
-	})
+	// 		  })
+	// 		})
+	// 	}
+	// })
 }
 
 
 
 
-if (menu_hash["menu_categories_attributes"].length > 0 && window.location.host.match("grubhub") == null) {
+// if (menu_hash["menu_categories_attributes"].length > 0 && window.location.host.match("grubhub") == null) {
+// 	chrome.extension.sendMessage({hash:menu_hash});
+// }
+
+if (menu_hash["menu_categories_attributes"].length > 0) {
 	chrome.extension.sendMessage({hash:menu_hash});
 }
