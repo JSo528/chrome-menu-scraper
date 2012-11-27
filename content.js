@@ -189,6 +189,127 @@ if (window.location.host.match("allmenus") != null) {
 	// 		})
 	// 	}
 	// })
+// } else if (window.location.host.match("biondivino") != null) {
+
+// 	menu_hash["menu_categories_attributes"].push({"name":"Sweet Wines", "menu_items_attributes":[]});
+
+// 	red_array = []
+// 	j = 0
+// 	for (i=0;i<=0;i+=16) {
+// 		link = "http://www.biondivino.com/wines/type/sweet/" + i
+// 		$.get(link,function(response) { 
+// 			j = j + 16;
+// 			console.log(j)
+// 			a = response
+// 			$(a).find('.wine_link_description a').each(function() {
+// 				red_array.push($(this).attr('href').split('/')[6])
+// 			})
+
+// 			if (j == 16) {
+// 				console.log('here')
+// 				j = 0;
+// 				for (i=0;i<red_array.length;i++){
+// 					link = "http://www.biondivino.com/wine/type/sweet/" + red_array[i]
+// 					$.get(link,function(response) { 
+// 						j++;
+// 						if ($(response).find('#content .cntr').text() == "") {		
+// 							a = response;
+// 							b = $(a).find('#content div')[0].childNodes[0].wholeText.replace("Winery:", "").trim();
+// 							c = $(a).find('#content div')[0].childNodes[2].wholeText.replace("Name:", "").trim();
+// 							d = "(" + $(a).find('#content div')[0].childNodes[4].wholeText.replace("Year:", "").trim() + ")";
+// 							mi_name = [b,c,d].join(' ');
+
+// 							console.log(mi_name)
+
+// 							mi_description = ""
+// 							$(a).find('#content div a').each(function(){
+// 								b = $(this).attr('href').split('/')[4];
+// 								b = b[0].toUpperCase() + b.substring(1);
+// 								c = $(this).text();
+// 								mi_description = mi_description.concat(b, ": ", c, "\n");
+// 							})
+
+// 							console.log(mi_description)
+
+// 							len = $(a).find('#content div')[0].childNodes.length
+
+// 							for (i=0;i<len;i++) {
+// 								b = $(a).find('#content div')[0].childNodes[i].wholeText
+// 								if (b != undefined) {
+// 									if (b.match('Price')) {
+// 										mi_price = b.replace('.', '').match(/\d+/)[0]
+// 									}
+// 								}
+// 							}
+
+// 							console.log(mi_price)
+
+// 							menu_hash["menu_categories_attributes"][0]["menu_items_attributes"].push({"name":mi_name, "description":mi_description, "price":mi_price});
+// 							console.log(j)
+// 						}
+					
+// 						if (j == red_array.length) {
+// 							chrome.extension.sendMessage({hash:menu_hash});
+// 						}
+
+// 					})
+// 				}
+				
+// 			}
+
+// 		})
+// 	}
+
+	
+
+	// menu_hash["menu_categories_attributes"].push({"name":"White Wines", "menu_items_attributes":[]});
+	// j = 100;
+	// for (i=100;i<1000;i++){
+	// 	link = "http://www.biondivino.com/wine/color/white/" + i
+	// 	$.get(link,function(response) { 
+	// 		j++;
+	// 		if ($(response).find('#content .cntr').text() == "") {		
+	// 			a = response;
+	// 			b = $(a).find('#content div')[0].childNodes[0].wholeText.replace("Winery:", "").trim();
+	// 			c = $(a).find('#content div')[0].childNodes[2].wholeText.replace("Name:", "").trim();
+	// 			d = $(a).find('#content div')[0].childNodes[4].wholeText.replace("Year:", "").trim();
+	// 			mi_name = [b,c,d].join(' ');
+
+	// 			console.log(mi_name)
+
+	// 			mi_description = ""
+	// 			$(a).find('#content div a').each(function(){
+	// 				b = $(this).attr('href').split('/')[4];
+	// 				b = b[0].toUpperCase() + b.substring(1);
+	// 				c = $(this).text();
+	// 				mi_description = mi_description.concat(b, ": ", c, "\n");
+	// 			})
+
+	// 			console.log(mi_description)
+
+	// 			len = $(a).find('#content div')[0].childNodes.length
+
+	// 			for (i=0;i<len;i++) {
+	// 				b = $(a).find('#content div')[0].childNodes[i].wholeText
+	// 				if (b != undefined) {
+	// 					if (b.match('Price')) {
+	// 						mi_price = b.replace('.', '').match(/\d+/)[0]
+	// 					}
+	// 				}
+	// 			}
+
+	// 			console.log(mi_price)
+
+	// 			menu_hash["menu_categories_attributes"][1]["menu_items_attributes"].push({"name":mi_name, "description":mi_description, "price":mi_price});
+	// 			console.log(j)
+	// 		}
+
+	// 		if (j > 1729) {
+	// 			chrome.extension.sendMessage({hash:menu_hash});
+	// 		}
+
+	// 	})
+	// }
 }
 
 
